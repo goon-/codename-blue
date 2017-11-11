@@ -1,0 +1,2 @@
+class KeyMapping(dict):
+    pass
