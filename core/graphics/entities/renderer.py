@@ -9,6 +9,8 @@ class Renderer(Driver):
         if not skip_frame:
             self.render()
 
+        return not skip_frame
+
     def render(self):
         viewports = entity_registry.get_by_class(Viewport)
         entities = entity_registry.get_by_class(DrawableEntity)

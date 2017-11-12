@@ -14,3 +14,5 @@ class FmGameRules(Driver):
             player.force.x = 0.1
         else:
             player.force.x = 0.0
+
+        return True
