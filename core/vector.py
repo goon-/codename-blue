@@ -1,3 +1,6 @@
+import math
+
+
 class Vector(object):
     def __init__(self, x=0.0, y=0.0):
         self.x = float(x)
@@ -10,14 +13,17 @@ class Vector(object):
         scalar = float(scalar)
         return Vector(self.x * scalar, self.y * scalar)
 
-    def __len__(self):
-        return self.x * self.y
+    def __sub__(self, other):
+        return Vector(self.x - other.x, self.y - other.y)
 
     def __nonzero__(self):
         return self.x != 0 or self.y != 0
 
     def __repr__(self):
         return 'Vector(%s, %s)' % (self.x, self.y)
+
+    def len(self):
+        return math.sqrt(self.x**2 + self.y**2)
 
     def zero(self):
         self.x = 0
@@ -38,6 +44,6 @@ class Vector(object):
 
     def normalize(self, norm=1.0):
         norm = float(norm)
-        mul = norm / len(self)
+        mul = norm / self.len()
         self.x *= mul
         self.y *= mul
