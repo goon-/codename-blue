@@ -8,7 +8,7 @@ from pygame_impl.graphics.entites.screen import Screen
 
 class PygameRenderer(Renderer):
     def __init__(self):
-        super(PygameRenderer, self).__init__()
+        super(PygameRenderer, self).__init__(20)
         self._screen = entity_registry.get_by_class(Screen)[0].screen
         self.surface = entity_registry.get_by_class(Viewport)[0].surface
 

@@ -16,7 +16,7 @@ class FmGameRules(Driver):
     SPEED_CAP = 100.0
 
     def __init__(self):
-        super(FmGameRules, self).__init__()
+        super(FmGameRules, self).__init__(0)
         key_mapping = KeyMapping({
             0: KEYS.d,
             1: KEYS.a,

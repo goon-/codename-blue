@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 class FpsCounter(Driver):
     def __init__(self):
-        super(FpsCounter, self).__init__()
+        super(FpsCounter, self).__init__(0)
         self._runs = []
         self._count_period = 1.0
         self._output_period = 1.0

@@ -19,7 +19,7 @@ class PlatformerPhysics(Driver):
     DEFAULT_FRICTION = 1.8
 
     def __init__(self, tolerance=0.001):
-        super(PlatformerPhysics, self).__init__()
+        super(PlatformerPhysics, self).__init__(10)
         self._game_time = entity_registry.get_by_class(GameTime)[0]
         self._tolerance = tolerance
 
