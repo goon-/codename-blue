@@ -1,11 +1,10 @@
 import pygame
 from pygame import constants
 
-from core.input.devices.input_device import InputDevice
-from core.input.devices.keyboard import KEYS
+from core.input.devices.keyboard import KEYS, Keyboard
 
 
-class PygameKeyboard(InputDevice):
+class PygameKeyboard(Keyboard):
     KEYMAP = {
         KEYS.w: constants.K_w,
         KEYS.a: constants.K_a,
