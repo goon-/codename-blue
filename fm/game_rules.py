@@ -5,6 +5,7 @@ from core.glob import entity_registry
 from core.input.devices.keyboard import KEYS, Keyboard
 from core.input.key_mapping import KeyMapping
 from core.input.player_input import PlayerInput
+from core.physics.platformer import PlatformerPhysics
 from core.vector import Vector
 from fm.player import FmPlayer
 from fm.wall import Wall
@@ -25,6 +26,7 @@ class FmGameRules(Driver):
         self._player = FmPlayer(PlayerInput(keyboard, key_mapping), Vector(100, 200))
         entity_registry.add(self._player)
         entity_registry.add(Wall(Vector(-1000, 0), Vector(2000, 10), (200, 200, 200)))
+        entity_registry.add(PlatformerPhysics())
 
     def run(self, skip_frame):
         if self._player.player_input.is_pressed(0) and self._player.velocity.x <= self.SPEED_CAP:

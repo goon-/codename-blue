@@ -1,6 +1,7 @@
 import logging.config
 
 from core.drivers.fps_counter import FpsCounter
+from core.gametime import GameTime
 from core.glob import entity_registry
 from core.physics.platformer import PlatformerPhysics
 from core.world import World
@@ -44,7 +45,7 @@ if __name__ == '__main__':
     entity_registry.add(PygameRenderer())
     entity_registry.add(PygameEventPumper())
 
+    entity_registry.add(GameTime(1.0 / 60.0))
     entity_registry.add(FmGameRules())
-    world = World(60)
-    entity_registry.add(PlatformerPhysics())
+    world = World()
     world.run()

@@ -9,24 +9,26 @@ logger = logging.getLogger(__name__)
 
 
 class World(Entity):
-    # TODO: move target_fps to run()
-    def __init__(self, target_fps):
+    def __init__(self, ):
         super(World, self).__init__()
-        self._game_time = GameTime(1.0 / float(target_fps))
         entity_registry.add(self)
-        entity_registry.add(self._game_time)
 
     def run(self):
-        drivers = entity_registry.get_by_class(Driver)
-        self._game_time.start()
+        drivers = sorted(entity_registry.get_by_class(Driver), key=lambda x: x.order)
+        game_time = entity_registry.get_by_class(GameTime)[0]
+        game_time.start()
         for driver in drivers:
-            driver.last_run = self._game_time.now
+            driver.last_run = game_time.now
 
+        skipped_frames = 0
         while True:
-            skip_frame = self._game_time.tick()
+            skip_frame = game_time.tick()
             for driver in drivers:
                 if driver.run(skip_frame):
-                    driver.last_run = self._game_time.now
+                    driver.last_run = game_time.now
 
             if skip_frame:
-                logger.warning('Skipped a frame')
+                skipped_frames += 1
+            elif skipped_frames > 0:
+                logger.warning('Skipped %s frames' % skipped_frames)
+                skipped_frames = 0
