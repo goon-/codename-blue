@@ -14,6 +14,3 @@ class FmPlayer(Player, Placeholder, DynamicPhysicEntity):
             mass=10.0,
             size=size,
         )
-        # Player.__init__(self, player_input=player_input)
-        # Placeholder.__init__(self, position, size)
-        # DynamicPhysicEntity.__init__(self, position, size, mass=10.0)

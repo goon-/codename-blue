@@ -15,8 +15,8 @@ CollisionParams = namedtuple('CollisionParams', ('side', 'time'))
 
 
 class PlatformerPhysics(Driver):
-    GRAVITY = 98
-    DEFAULT_FRICTION = 1.8
+    GRAVITY = 600
+    DEFAULT_FRICTION = 0.5
 
     def __init__(self, tolerance=0.001):
         super(PlatformerPhysics, self).__init__(10)
@@ -44,11 +44,6 @@ class PlatformerPhysics(Driver):
 
     def _update_velocity(self, entity, time_delta):
         entity.velocity.add(entity.force * time_delta * entity.rev_mass)
-        # if self._eq(entity.velocity.x, 0):
-        #     entity.velocity.x = 0
-        #
-        # if self._eq(entity.velocity.y, 0):
-        #     entity.velocity.y = 0
 
     def _get_collision(self, entity, time_delta):
         velocity = entity.velocity.len()
@@ -83,8 +78,8 @@ class PlatformerPhysics(Driver):
         return None
 
     def _process_collision(self, entity, collision, time_delta):
+        entity.collision = collision
         if collision is not None:
-            entity.collision = collision
             if collision.side in (Edge.LEFT, Edge.RIGHT):
                 entity.position.x += entity.velocity.x * collision.time
                 entity.position.y += entity.velocity.y * time_delta
