@@ -1,5 +1,5 @@
 from core.entity import Entity
-from core.vector import Vector
+from core.glob import get_vec_fact
 
 
 class Viewport(Entity):
@@ -7,13 +7,13 @@ class Viewport(Entity):
         super(Viewport, self).__init__()
         self._rect = rect
         self._screen_rect = screen_rect
-        self._transform = Vector(
+        self._transform = get_vec_fact().vector2(
             float(screen_rect[2]) / float(rect[2]),
             float(screen_rect[3]) / float(rect[3]),
         )
-        self._world_translate = Vector(-rect[0], -rect[1])
-        self._screen_translate = Vector(screen_rect[0], screen_rect[1])
-        self._tmp = Vector()
+        self._world_translate = get_vec_fact().vector2(-rect[0], -rect[1])
+        self._screen_translate = get_vec_fact().vector2(screen_rect[0], screen_rect[1])
+        self._tmp = get_vec_fact().vector2()
 
     def transform_v(self, vector):
         vector.add(self._world_translate)

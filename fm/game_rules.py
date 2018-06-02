@@ -2,13 +2,12 @@ import logging
 
 from core.drivers.driver import Driver
 from core.gametime import GameTime
-from core.glob import entity_registry
+from core.glob import entity_registry, get_vec_fact
 from core.input.devices.keyboard import KEYS, Keyboard
 from core.input.key_mapping import KeyMapping
 from core.input.player_input import PlayerInput
 from core.physics.entities.physic_entity import Edge
 from core.physics.platformer import PlatformerPhysics
-from core.vector import Vector
 from fm.player import FmPlayer
 from fm.wall import Wall
 
@@ -26,9 +25,9 @@ class FmGameRules(Driver):
             2: KEYS.space,
         })
         keyboard = entity_registry.get_by_class(Keyboard)[0]
-        self._player = FmPlayer(PlayerInput(keyboard, key_mapping), Vector(100, 200))
+        self._player = FmPlayer(PlayerInput(keyboard, key_mapping), get_vec_fact().vector2(100, 200))
         entity_registry.add(self._player)
-        entity_registry.add(Wall(Vector(-1000, 0), Vector(2000, 10), (200, 200, 200)))
+        entity_registry.add(Wall(get_vec_fact().vector2(-1000, 0), get_vec_fact().vector2(2000, 10), (200, 200, 200)))
         entity_registry.add(PlatformerPhysics())
         self._game_time = entity_registry.get_by_class(GameTime)[0]
 

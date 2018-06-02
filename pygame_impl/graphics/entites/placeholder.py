@@ -2,8 +2,8 @@ import logging
 
 import pygame
 
+from core.glob import get_vec_fact
 from core.graphics.entities.drawable_entity import DrawableEntity
-from core.vector import Vector
 
 logger = logging.getLogger(__name__)
 
@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class Placeholder(DrawableEntity):
     def __init__(self, placeholder_size=None, color=(255, 255, 255), **kwargs):
         super(Placeholder, self).__init__(**kwargs)
-        self._placeholder_size = placeholder_size or Vector()
+        self._placeholder_size = placeholder_size or get_vec_fact().vector2()
         self._color = color
 
     def draw(self, viewport):

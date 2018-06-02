@@ -1,26 +1,28 @@
 import math
 
+from core.glob import get_vec_fact
 
-class Vector(object):
+
+class Vector2(object):
     def __init__(self, x=0.0, y=0.0):
         self.x = float(x)
         self.y = float(y)
 
     def __add__(self, other):
-        return Vector(self.x + other.x, self.y + other.y)
+        return get_vec_fact().vector2(self.x + other.x, self.y + other.y)
 
     def __mul__(self, scalar):
         scalar = float(scalar)
-        return Vector(self.x * scalar, self.y * scalar)
+        return get_vec_fact().vector2(self.x * scalar, self.y * scalar)
 
     def __sub__(self, other):
-        return Vector(self.x - other.x, self.y - other.y)
+        return get_vec_fact().vector2(self.x - other.x, self.y - other.y)
 
     def __nonzero__(self):
         return self.x != 0 or self.y != 0
 
     def __repr__(self):
-        return 'Vector(%s, %s)' % (self.x, self.y)
+        return 'Vector2(%s, %s)' % (self.x, self.y)
 
     def len(self):
         return math.sqrt(self.x**2 + self.y**2)
@@ -33,14 +35,9 @@ class Vector(object):
         self.x += other.x
         self.y += other.y
 
-    def multiply(self, scalar):
-        scalar = float(scalar)
-        self.x *= scalar
-        self.y *= scalar
-
-    def multiply_v(self, vector):
-        self.x *= vector.x
-        self.y *= vector.y
+    def multiply_v(self, Vector2):
+        self.x *= Vector2.x
+        self.y *= Vector2.y
 
     def normalize(self, norm=1.0):
         norm = float(norm)

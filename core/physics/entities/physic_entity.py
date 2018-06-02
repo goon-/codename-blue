@@ -2,7 +2,7 @@ import logging
 
 from enum import Enum
 
-from core.vector import Vector
+from core.glob import get_vec_fact
 from core.world_entity import WorldEntity
 
 logger = logging.getLogger(__name__)
@@ -25,14 +25,14 @@ class Edge(Enum):
 class PhysicEntity(WorldEntity):
     def __init__(self, size=None, **kwargs):
         super(PhysicEntity, self).__init__(**kwargs)
-        self.size = size or Vector()
+        self.size = size or get_vec_fact().vector2()
         self.collision = None
 
     def vertices(self):
         return (
-            self.position + Vector(self.size.x, 0),
+            self.position + get_vec_fact().vector2(self.size.x, 0),
             self.position + self.size,
-            self.position + Vector(0, self.size.y),
+            self.position + get_vec_fact().vector2(0, self.size.y),
             self.position,
         )
 

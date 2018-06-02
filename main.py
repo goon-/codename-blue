@@ -3,7 +3,7 @@ import logging.config
 from core.drivers.fps_counter import FpsCounter
 from core.gametime import GameTime
 from core.glob import entity_registry
-from core.physics.platformer import PlatformerPhysics
+from core.math.default_vector_factory import DefaultVectorFactory
 from core.world import World
 from fm.game_rules import FmGameRules
 from pygame_impl.event_pumper import PygameEventPumper
@@ -40,6 +40,7 @@ logging.config.dictConfig({
 
 if __name__ == '__main__':
     init_pygame()
+    entity_registry.add(DefaultVectorFactory())
     entity_registry.add(FpsCounter())
     entity_registry.add(PygameViewport((0, 0, 400, 400), (0, 0, 400, 400)))
     entity_registry.add(PygameRenderer())

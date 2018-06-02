@@ -4,11 +4,10 @@ from copy import copy
 
 from core.drivers.driver import Driver
 from core.gametime import GameTime
-from core.glob import entity_registry
+from core.glob import entity_registry, get_vec_fact
 from core.physics.entities.dynamic_physic_entity import DynamicPhysicEntity
 from core.physics.entities.physic_entity import Edge
 from core.physics.entities.static_physic_entity import StaticPhysicEntity
-from core.vector import Vector
 
 logger = logging.getLogger(__name__)
 CollisionParams = namedtuple('CollisionParams', ('side', 'time'))
@@ -50,10 +49,10 @@ class PlatformerPhysics(Driver):
         if not velocity:
             return
 
-        entity_offset = Vector(entity.velocity.x * time_delta, entity.velocity.y * time_delta)
+        entity_offset = get_vec_fact().vector2(entity.velocity.x * time_delta, entity.velocity.y * time_delta)
         collision_candidates = self._get_collision_candidates(entity, entity_offset)
         point_projections = [
-            (point, Vector(point.x + entity_offset.x, point.y + entity_offset.y))
+            (point, get_vec_fact().vector2(point.x + entity_offset.x, point.y + entity_offset.y))
             for point in entity.vertices()
         ]
         rev_velocity = 1.0 / entity.velocity.len()
@@ -110,7 +109,7 @@ class PlatformerPhysics(Driver):
         if self._eq(denominator, 0):
             return None
 
-        cross_point = Vector(
+        cross_point = get_vec_fact().vector2(
             ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / denominator,
             ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denominator
         )
