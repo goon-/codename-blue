@@ -30,7 +30,7 @@ class Placeholder(DrawableEntity):
                 rect[2] - rect[0],
                 -(rect[3] - rect[1]),
             ),
-            1,
+            0,
         )
         # logger.debug('Placeholder.draw(): %s, %s, %s, %s' % (
         #     rect[0],
