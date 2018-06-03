@@ -9,6 +9,7 @@ class KEYS(Enum):
     s = 's'
     d = 'd'
     space = 'space'
+    esc = 'esc'
 
 
 class Keyboard(InputDevice):

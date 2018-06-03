@@ -6,6 +6,7 @@ from core.glob import entity_registry, get_vec_fact
 from core.input.devices.keyboard import KEYS, Keyboard
 from core.input.key_mapping import KeyMapping
 from core.input.player_input import PlayerInput
+from core.world import World
 from fm.physics.spacecraft import SpacecraftPhysics
 from fm.player import FmPlayer
 from fm.wall import Wall
@@ -26,6 +27,7 @@ class FmGameRules(Driver):
             1: KEYS.a,
             2: KEYS.w,
             3: KEYS.s,
+            4: KEYS.esc,
         })
         keyboard = entity_registry.get_by_class(Keyboard)[0]
         self._player = FmPlayer(
@@ -55,5 +57,9 @@ class FmGameRules(Driver):
 
         if self._player.player_input.is_pressed(3) and self._player.velocity.len() <= self.SPEED_CAP:
             self._player.force.y -= 6000
+
+        if self._player.player_input.is_pressed(4):
+            logger.info('Exiting')
+            entity_registry.get_by_class(World)[0].stop()
 
         return True

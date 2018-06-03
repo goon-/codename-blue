@@ -11,6 +11,7 @@ class PygameKeyboard(Keyboard):
         KEYS.s: constants.K_s,
         KEYS.d: constants.K_d,
         KEYS.space: constants.K_SPACE,
+        KEYS.esc: constants.K_ESCAPE,
     }
 
     def is_pressed(self, key):
