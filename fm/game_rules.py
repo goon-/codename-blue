@@ -18,20 +18,24 @@ class FmGameRules(Driver):
     COLLSION_CAT_BACKGROUND = 0
     COLLSION_CAT_PLAYER = 1
     COLLSION_CAT_WALL = 2
+    COLLSION_CAT_PLAYER_PROJECTILE = 3
+    COLLSION_CAT_ENEMY = 4
 
     def __init__(self):
         super(FmGameRules, self).__init__(0)
         key_mapping = KeyMapping({
-            0: KEYS.d,
-            1: KEYS.a,
-            2: KEYS.w,
-            3: KEYS.s,
-            4: KEYS.esc,
+            FmPlayer.ACT_MOVE_RIGHT: KEYS.d,
+            FmPlayer.ACT_MOVE_LEFT: KEYS.a,
+            FmPlayer.ACT_MOVE_UP: KEYS.w,
+            FmPlayer.ACT_MOVE_DOWN: KEYS.s,
+            FmPlayer.ACT_EXIT: KEYS.esc,
+            FmPlayer.ACT_FIRE: KEYS.space,
         })
         keyboard = entity_registry.get_by_class(Keyboard)[0]
         self._player = FmPlayer(
             PlayerInput(keyboard, key_mapping), get_vec_fact().vector2(1, 200), z=1,
-            collision_category=self.COLLSION_CAT_PLAYER
+            collision_category=self.COLLSION_CAT_PLAYER,
+            projectile_collision_category=self.COLLSION_CAT_PLAYER_PROJECTILE
         )
         entity_registry.add(self._player)
         entity_registry.add(Wall(
@@ -41,6 +45,7 @@ class FmGameRules(Driver):
         physics = SpacecraftPhysics()
         physics.set_collidable_categories(self.COLLSION_CAT_BACKGROUND, [])
         physics.set_collidable_categories(self.COLLSION_CAT_PLAYER, [])
+        physics.set_collidable_categories(self.COLLSION_CAT_PLAYER_PROJECTILE, [self.COLLSION_CAT_ENEMY])
         entity_registry.add(physics)
         entity_registry.add(ActorDriver(20))
         self._game_time = entity_registry.get_by_class(GameTime)[0]
