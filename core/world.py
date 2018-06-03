@@ -12,6 +12,7 @@ class World(Entity):
     def __init__(self, ):
         super(World, self).__init__()
         entity_registry.add(self)
+        self._stop = False
 
     def run(self):
         drivers = sorted(entity_registry.get_by_class(Driver), key=lambda x: x.order)
@@ -21,7 +22,7 @@ class World(Entity):
             driver.last_run = game_time.now
 
         skipped_frames = 0
-        while True:
+        while not self._stop:
             skip_frame = game_time.tick()
             for driver in drivers:
                 if driver.run(skip_frame):
@@ -32,3 +33,8 @@ class World(Entity):
             elif skipped_frames > 0:
                 logger.warning('Skipped %s frames' % skipped_frames)
                 skipped_frames = 0
+
+        logger.info('The world has stopped')
+
+    def stop(self):
+        self._stop = True
