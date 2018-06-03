@@ -31,12 +31,12 @@ class FmGameRules(Driver):
         })
         keyboard = entity_registry.get_by_class(Keyboard)[0]
         self._player = FmPlayer(
-            PlayerInput(keyboard, key_mapping), get_vec_fact().vector2(1, 200),
+            PlayerInput(keyboard, key_mapping), get_vec_fact().vector2(1, 200), z=1,
             collision_category=self.COLLSION_CAT_PLAYER
         )
         entity_registry.add(self._player)
         entity_registry.add(Wall(
-            get_vec_fact().vector2(-1, -1), get_vec_fact().vector2(1000, 1000), (200, 200, 255),
+            get_vec_fact().vector2(-1, -1), get_vec_fact().vector2(1000, 1000), (200, 200, 255), z=2,
             collision_category=self.COLLSION_CAT_BACKGROUND
         ))
         physics = SpacecraftPhysics()
