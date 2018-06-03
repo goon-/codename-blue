@@ -15,7 +15,7 @@ class Renderer2d(Driver):
         viewports = entity_registry.get_by_class(Viewport)
         entities = entity_registry.get_by_class(DrawableEntity)
         self.clear_screen()
-        for entity in sorted(entities, key=lambda x: x.z):
+        for entity in sorted(entities, key=lambda x: -x.z):
             for viewport in viewports:
                 entity.draw(viewport)
 
