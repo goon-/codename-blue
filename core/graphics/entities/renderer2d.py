@@ -4,7 +4,7 @@ from core.graphics.entities.drawable_entity import DrawableEntity
 from core.graphics.entities.viewport import Viewport
 
 
-class Renderer(Driver):
+class Renderer2d(Driver):
     def run(self, skip_frame):
         if not skip_frame:
             self.render()
