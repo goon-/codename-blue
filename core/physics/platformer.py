@@ -2,18 +2,18 @@ import logging
 from collections import namedtuple
 from copy import copy
 
-from core.drivers.driver import Driver
 from core.gametime import GameTime
 from core.glob import entity_registry, get_vec_fact
 from core.physics.entities.dynamic_physic_entity import DynamicPhysicEntity
 from core.physics.entities.physic_entity import Edge
 from core.physics.entities.static_physic_entity import StaticPhysicEntity
+from core.physics.physics_base import PhysicsBase
 
 logger = logging.getLogger(__name__)
 CollisionParams = namedtuple('CollisionParams', ('side', 'time'))
 
 
-class PlatformerPhysics(Driver):
+class PlatformerPhysics(PhysicsBase):
     GRAVITY = 600
     DEFAULT_FRICTION = 0.5
 
@@ -94,7 +94,10 @@ class PlatformerPhysics(Driver):
         entity_projection = copy(entity)
         entity_projection.position = entity.position + entity_offset
         static_entities = entity_registry.get_by_class(StaticPhysicEntity)
-        return [ent for ent in static_entities if entity_projection.collides(ent)]
+        return [
+            ent for ent in static_entities
+            if self.are_entities_collidable(entity, ent) and entity_projection.collides(ent)
+        ]
 
     def _get_cross_point(self, line1, line2):
         x1 = line1[0].x

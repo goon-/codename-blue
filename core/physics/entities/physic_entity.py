@@ -23,9 +23,10 @@ class Edge(Enum):
 
 
 class PhysicEntity(WorldEntity):
-    def __init__(self, size=None, **kwargs):
+    def __init__(self, size=None, collision_category=None, **kwargs):
         super(PhysicEntity, self).__init__(**kwargs)
         self.size = size or get_vec_fact().vector2()
+        self.collision_category = collision_category
         self.collision = None
 
     def vertices(self):
