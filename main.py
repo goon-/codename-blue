@@ -7,7 +7,7 @@ from core.math.default_vector_factory import DefaultVectorFactory
 from core.world import World
 from fm.game_rules import FmGameRules
 from pygame_impl.event_pumper import PygameEventPumper
-from pygame_impl.graphics.entites.renderer import PygameRenderer
+from pygame_impl.graphics.entites.renderer2d import PygameRenderer2d
 from pygame_impl.graphics.entites.viewport import PygameViewport
 from pygame_impl.init import init_pygame
 
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     entity_registry.add(DefaultVectorFactory())
     entity_registry.add(FpsCounter())
     entity_registry.add(PygameViewport((0, 0, 400, 400), (0, 0, 400, 400)))
-    entity_registry.add(PygameRenderer())
+    entity_registry.add(PygameRenderer2d())
     entity_registry.add(PygameEventPumper())
 
     entity_registry.add(GameTime(1.0 / 60.0))
