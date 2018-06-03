@@ -5,12 +5,13 @@ from pygame_impl.graphics.entites.placeholder import Placeholder
 
 
 class FmPlayer(Player, Placeholder, DynamicPhysicEntity):
-    def __init__(self, player_input, position):
-        size = get_vec_fact().vector2(10, 15)
+    def __init__(self, player_input, position, collision_category=None):
+        size = get_vec_fact().vector2(20, 10)
         super(FmPlayer, self).__init__(
             player_input=player_input,
             placeholder_size=size,
             position=position,
             mass=10.0,
             size=size,
+            collision_category=collision_category
         )
