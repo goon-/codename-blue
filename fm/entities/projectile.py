@@ -1,5 +1,5 @@
 from core.actors.actor import Actor
-from core.glob import get_vec_fact
+from core.glob import get_vec_fact, entity_registry
 from core.physics.entities.dynamic_physic_entity import DynamicPhysicEntity
 from pygame_impl.graphics.entites.placeholder import Placeholder
 
@@ -11,4 +11,7 @@ class Projectile(DynamicPhysicEntity, Placeholder, Actor):
         self.projectile_force = projectile_force or get_vec_fact().vector2()
 
     def think(self):
-        self.force = self.projectile_force
+        # TODO: fix physics to not modify vectors, but overwrite them with new ones
+        self.force = self.projectile_force.copy()
+        if self.collision:
+            entity_registry.remove(self)
