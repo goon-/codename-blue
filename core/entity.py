@@ -18,6 +18,9 @@ class Entity(object):
 
         self._id = val
 
+    def on_destroy(self):
+        pass
+
 
 class EntityRegistry(object):
     def __init__(self):
@@ -47,6 +50,20 @@ class EntityRegistry(object):
                 ret.append(entity)
 
         return ret
+
+    def remove(self, entity):
+        if not isinstance(entity, Entity):
+            raise TypeError('Cannot remove a non-entity from the registry')
+
+        if entity.id not in self._entities:
+            raise TypeError('Entity with id %s is not registered' % entity.id)
+
+        entity_from_registry = self._entities[entity.id]
+        if entity_from_registry is not entity:
+            raise TypeError('Tried to remove an invalid entity (did you manually assign the entity id?)')
+
+        self._entities[entity.id].on_destroy()
+        del self._entities[entity.id]
 
 
 entity_registry = EntityRegistry()
