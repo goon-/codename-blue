@@ -23,6 +23,7 @@ class PlatformerPhysics(PhysicsBase):
         self._tolerance = tolerance
 
     def run(self, skip_frame):
+        self._reset_static_entities_collisions()
         time_delta = self._game_time.now - self.last_run
         dynamic_physic_entities = entity_registry.get_by_class(DynamicPhysicEntity)
         for entity in dynamic_physic_entities:
@@ -33,6 +34,10 @@ class PlatformerPhysics(PhysicsBase):
             entity.force.zero()
 
         return True
+
+    def _reset_static_entities_collisions(self):
+        for entity in entity_registry.get_by_class(StaticPhysicEntity):
+            entity.collision = None
 
     def _update_forces(self, entity):
         entity.force.y -= self.GRAVITY * entity.mass
@@ -96,8 +101,9 @@ class PlatformerPhysics(PhysicsBase):
         entity_projection = copy(entity)
         entity_projection.position = entity.position + entity_offset
         static_entities = entity_registry.get_by_class(StaticPhysicEntity)
+        other_dynamic_entities = filter(lambda x: x is not entity, entity_registry.get_by_class(DynamicPhysicEntity))
         return [
-            ent for ent in static_entities
+            ent for ent in static_entities + other_dynamic_entities
             if self.are_entities_collidable(entity, ent) and entity_projection.collides(ent)
         ]
 
