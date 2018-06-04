@@ -5,7 +5,7 @@ from core.glob import get_vec_fact, entity_registry
 from core.physics.entities.dynamic_physic_entity import DynamicPhysicEntity
 from core.player import Player
 from core.world import World
-from fm.projectile import Projectile
+from fm.entities.projectile import Projectile
 from pygame_impl.graphics.entites.placeholder import Placeholder
 
 logger = logging.getLogger(__name__)
