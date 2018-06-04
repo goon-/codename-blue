@@ -44,3 +44,11 @@ class Vector2(object):
         mul = norm / self.len()
         self.x *= mul
         self.y *= mul
+
+    def normalized(self, norm=1.0):
+        normalized_vector = get_vec_fact().vector2(self.x, self.y)
+        normalized_vector.normalize(norm)
+        return normalized_vector
+
+    def copy(self):
+        return get_vec_fact().vector2(self.x, self.y)
