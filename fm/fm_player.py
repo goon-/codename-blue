@@ -56,7 +56,8 @@ class FmPlayer(Player, Placeholder, DynamicPhysicEntity):
         if self.player_input.is_pressed(self.ACT_FIRE):
             if self._game_time.now - self._last_shot_time >= self.fire_cooldown:
                 entity_registry.add(Projectile(
-                    self.position + get_vec_fact().vector2(21, 0), get_vec_fact().vector2(0.1, 0), (255, 0, 0),
-                    z=self.z, collision_category=self.projectile_collision_category
+                    self.position + get_vec_fact().vector2(21, 0), get_vec_fact().vector2(1000, 0), (0, 0, 255),
+                    velocity=get_vec_fact().vector2(300, 0), mass=1, z=self.z,
+                    collision_category=self.projectile_collision_category
                 ))
                 self._last_shot_time = self._game_time.now

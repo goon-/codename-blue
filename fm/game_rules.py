@@ -8,6 +8,7 @@ from core.input.devices.keyboard import KEYS, Keyboard
 from core.input.key_mapping import KeyMapping
 from core.input.player_input import PlayerInput
 from fm.fm_player import FmPlayer
+from fm.npc.dummy_enemy import DummyEnemy
 from fm.physics.spacecraft import SpacecraftPhysics
 from fm.wall import Wall
 
@@ -42,6 +43,10 @@ class FmGameRules(Driver):
             get_vec_fact().vector2(-1, -1), get_vec_fact().vector2(1000, 1000), (200, 200, 255), z=2,
             collision_category=self.COLLSION_CAT_BACKGROUND
         ))
+        entity_registry.add(DummyEnemy(
+            get_vec_fact().vector2(300, 300), 1000, 2, z=1, collision_category=self.COLLSION_CAT_ENEMY,
+            color=(255, 0, 0)
+        ))
         physics = SpacecraftPhysics()
         physics.set_collidable_categories(self.COLLSION_CAT_BACKGROUND, [])
         physics.set_collidable_categories(self.COLLSION_CAT_PLAYER, [])
@@ -51,5 +56,4 @@ class FmGameRules(Driver):
         self._game_time = entity_registry.get_by_class(GameTime)[0]
 
     def run(self, skip_frame):
-
         return True
