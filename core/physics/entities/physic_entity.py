@@ -16,10 +16,10 @@ class Vertex(Enum):
 
 
 class Edge(Enum):
-    RIGHT = 0
-    TOP = 1
-    LEFT = 2
-    BOTTOM = 3
+    RIGHT = 1
+    TOP = 2
+    LEFT = -1
+    BOTTOM = -2
 
 
 class PhysicEntity(WorldEntity):
@@ -39,12 +39,12 @@ class PhysicEntity(WorldEntity):
 
     def edges(self):
         vertices = self.vertices()
-        return (
-            (vertices[0], vertices[1]),
-            (vertices[1], vertices[2]),
-            (vertices[2], vertices[3]),
-            (vertices[3], vertices[0]),
-        )
+        return {
+            Edge.RIGHT: (vertices[0], vertices[1]),
+            Edge.TOP: (vertices[1], vertices[2]),
+            Edge.LEFT: (vertices[2], vertices[3]),
+            Edge.BOTTOM: (vertices[3], vertices[0]),
+        }
 
     def collides(self, other):
         return \

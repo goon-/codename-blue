@@ -10,7 +10,7 @@ from core.physics.entities.static_physic_entity import StaticPhysicEntity
 from core.physics.physics_base import PhysicsBase
 
 logger = logging.getLogger(__name__)
-CollisionParams = namedtuple('CollisionParams', ('side', 'time'))
+CollisionParams = namedtuple('CollisionParams', ('side', 'time', 'entity'))
 
 
 class PlatformerPhysics(PhysicsBase):
@@ -59,7 +59,7 @@ class PlatformerPhysics(PhysicsBase):
         collisions = []
         for candidate in collision_candidates:
             for point_proj in point_projections:
-                for edge_num, edge in enumerate(candidate.edges()):
+                for side, edge in candidate.edges().items():
                     cross_point = self._get_cross_point(point_proj, edge)
                     if cross_point is not None:
                         collision_time = (cross_point - point_proj[0]).len() * rev_velocity
@@ -67,8 +67,9 @@ class PlatformerPhysics(PhysicsBase):
                             collision_time = 0.0
 
                         collisions.append(CollisionParams(
-                            Edge(edge_num),
-                            collision_time
+                            side,
+                            collision_time,
+                            candidate
                         ))
 
         if collisions:
@@ -79,6 +80,7 @@ class PlatformerPhysics(PhysicsBase):
     def _process_collision(self, entity, collision, time_delta):
         entity.collision = collision
         if collision is not None:
+            collision.entity.collision = CollisionParams(Edge(-collision.side.value), collision.time, entity)
             if collision.side in (Edge.LEFT, Edge.RIGHT):
                 entity.position.x += entity.velocity.x * collision.time
                 entity.position.y += entity.velocity.y * time_delta
