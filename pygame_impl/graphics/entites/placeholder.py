@@ -11,19 +11,19 @@ logger = logging.getLogger(__name__)
 class Placeholder(DrawableEntity):
     def __init__(self, placeholder_size=None, color=(255, 255, 255), **kwargs):
         super(Placeholder, self).__init__(**kwargs)
-        self._placeholder_size = placeholder_size or get_vec_fact().vector2()
-        self._color = color
+        self.placeholder_size = placeholder_size or get_vec_fact().vector2()
+        self.color = color
 
     def draw(self, viewport):
         rect = viewport.transform_r((
             self.position.x,
             self.position.y,
-            self.position.x + self._placeholder_size.x,
-            self.position.y + self._placeholder_size.y,
+            self.position.x + self.placeholder_size.x,
+            self.position.y + self.placeholder_size.y,
         ))
         pygame.draw.rect(
             viewport.surface,
-            self._color,
+            self.color,
             (
                 rect[0],
                 viewport.surface.get_height() - rect[1],
