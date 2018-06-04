@@ -7,8 +7,8 @@ from core.glob import entity_registry, get_vec_fact
 from core.input.devices.keyboard import KEYS, Keyboard
 from core.input.key_mapping import KeyMapping
 from core.input.player_input import PlayerInput
+from fm.fm_player import FmPlayer
 from fm.physics.spacecraft import SpacecraftPhysics
-from fm.player import FmPlayer
 from fm.wall import Wall
 
 logger = logging.getLogger(__name__)
