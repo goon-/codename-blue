@@ -1,7 +1,8 @@
 import logging
 
 from core.actors.actor_driver import ActorDriver
-from core.drivers.driver import Driver
+from core.drivers.fps_counter import FpsCounter
+from core.game_rules import GameRules
 from core.gametime import GameTime
 from core.glob import entity_registry, get_vec_fact
 from core.input.devices.keyboard import KEYS, Keyboard
@@ -15,7 +16,7 @@ from fm.wall import Wall
 logger = logging.getLogger(__name__)
 
 
-class FmGameRules(Driver):
+class FmGameRules(GameRules):
     COLLSION_CAT_BACKGROUND = 0
     COLLSION_CAT_PLAYER = 1
     COLLSION_CAT_WALL = 2
@@ -24,6 +25,10 @@ class FmGameRules(Driver):
 
     def __init__(self):
         super(FmGameRules, self).__init__()
+        self._player = None
+        self._game_time = None
+
+    def initialize(self):
         key_mapping = KeyMapping({
             FmPlayer.ACT_MOVE_RIGHT: KEYS.d,
             FmPlayer.ACT_MOVE_LEFT: KEYS.a,
@@ -53,6 +58,7 @@ class FmGameRules(Driver):
         physics.set_collidable_categories(self.COLLSION_CAT_PLAYER_PROJECTILE, [self.COLLSION_CAT_ENEMY])
         entity_registry.add(physics)
         entity_registry.add(ActorDriver(20))
+        entity_registry.add(FpsCounter())
         self._game_time = entity_registry.get_by_class(GameTime)[0]
 
     def run(self, skip_frame):

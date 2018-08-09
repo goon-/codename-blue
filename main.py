@@ -1,6 +1,5 @@
 import logging.config
 
-from core.drivers.fps_counter import FpsCounter
 from core.gametime import GameTime
 from core.glob import entity_registry
 from core.math.default_vector_factory import DefaultVectorFactory
@@ -47,13 +46,16 @@ def initialize_subsystems():
 if __name__ == '__main__':
     # TODO: move core stuff initialization somewhere
     entity_registry.add(DefaultVectorFactory())
-    entity_registry.add(FpsCounter())
     entity_registry.add(GameTime(1.0 / 60.0))
 
     entity_registry.add(PygameSubsystem())
     entity_registry.add(PygameGraphicsSubsystem())
     entity_registry.add(PygameInputSubsystem())
     initialize_subsystems()
-    entity_registry.add(FmGameRules())
+
+    game_rules = FmGameRules()
+    entity_registry.add(game_rules)
+    game_rules.initialize()
+
     world = World()
     world.run()
