@@ -4,6 +4,10 @@ from core.graphics.entities.drawable_entity import DrawableEntity
 from core.graphics.entities.viewport import Viewport
 
 
+def is_in_visible_rendering_group(entity):
+    return not entity.rendering_group or entity.rendering_group.visible
+
+
 class Renderer2d(Driver):
     def __init__(self):
         super(Renderer2d, self).__init__(GRAPHICS_DEFAULT_ORDER)
@@ -18,7 +22,7 @@ class Renderer2d(Driver):
         viewports = entity_registry.get_by_class(Viewport)
         entities = entity_registry.get_by_class(DrawableEntity)
         self.clear_screen()
-        for entity in sorted(entities, key=lambda x: -x.z):
+        for entity in sorted(filter(is_in_visible_rendering_group, entities), key=lambda x: -x.z):
             for viewport in viewports:
                 entity.draw(viewport)
 
