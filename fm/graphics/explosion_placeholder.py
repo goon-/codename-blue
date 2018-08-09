@@ -1,6 +1,6 @@
 from core.glob import entity_registry
 from core.graphics.entities.animation import Animation
-from pygame_impl.graphics.entites.placeholder import Placeholder
+from fm.graphics.placeholder import Placeholder
 
 
 class ExplosionPlaceholder(Animation):

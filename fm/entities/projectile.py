@@ -1,7 +1,7 @@
 from core.actors.actor import Actor
 from core.glob import get_vec_fact, entity_registry
 from core.physics.entities.dynamic_physic_entity import DynamicPhysicEntity
-from pygame_impl.graphics.entites.placeholder import Placeholder
+from fm.graphics.placeholder import Placeholder
 
 
 class Projectile(DynamicPhysicEntity, Placeholder, Actor):

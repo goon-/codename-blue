@@ -1,5 +1,5 @@
 from core.physics.entities.static_physic_entity import StaticPhysicEntity
-from pygame_impl.graphics.entites.placeholder import Placeholder
+from fm.graphics.placeholder import Placeholder
 
 
 class Wall(StaticPhysicEntity, Placeholder):
