@@ -22,5 +22,14 @@ class Renderer2d(Driver):
             for viewport in viewports:
                 entity.draw(viewport)
 
+    def create_viewport(self, world_rect, screen_rect):
+        raise NotImplementedError()
+
     def clear_screen(self):
+        raise NotImplementedError()
+
+    def fill_rect(self, viewport, rect, color):
+        raise NotImplementedError()
+
+    def text(self, viewport, position, text, color, font=None):
         raise NotImplementedError()

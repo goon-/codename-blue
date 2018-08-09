@@ -1,24 +1,18 @@
-import pygame
-
+from core.glob import entity_registry
 from core.graphics.entities.drawable_entity import DrawableEntity
+from core.graphics.entities.renderer2d import Renderer2d
 
 
 class Text(DrawableEntity):
-    def __init__(self, x, y, **kwargs):
+    def __init__(self, position, text='', color=(255, 255, 255), **kwargs):
         super(Text, self).__init__(**kwargs)
-        self._x = x
-        self._y = y
-        self._font = pygame.font.SysFont("monospace", 10)
-        self._text = ''
-
-    @property
-    def text(self):
-        return self._text
-
-    @text.setter
-    def text(self, text):
-        self._text = text
+        self.position = position
+        self.text = text
+        self.color = color
 
     def draw(self, viewport):
-        label = self._font.render(self._text, 1, (255, 255, 255))
-        viewport.surface.blit(label, (self._x, self._y))
+        self._get_renderer().text(viewport, self.position, self.text, self.color)
+
+    @staticmethod
+    def _get_renderer():
+        return entity_registry.get_by_class(Renderer2d)[0]

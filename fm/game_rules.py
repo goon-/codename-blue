@@ -5,6 +5,8 @@ from core.drivers.fps_counter import FpsCounter
 from core.game_rules import GameRules
 from core.gametime import GameTime
 from core.glob import entity_registry, get_vec_fact
+from core.graphics.entities.renderer2d import Renderer2d
+from core.graphics.entities.screen import Screen
 from core.input.devices.keyboard import KEYS, Keyboard
 from core.input.key_mapping import KeyMapping
 from core.input.player_input import PlayerInput
@@ -61,6 +63,9 @@ class FmGameRules(GameRules):
         entity_registry.add(FpsCounter())
         screen = entity_registry.get_by_class(Screen)[0]
         screen.set_resolution(400, 500)
+        renderer = entity_registry.get_by_class(Renderer2d)[0]
+        entity_registry.add(renderer.create_viewport((0, 0, 400, 400), (0, 100, 400, 400)))
+        entity_registry.add(renderer.create_viewport((1000, 1000, 1400, 200), (0, 000, 400, 200)))
         self._game_time = entity_registry.get_by_class(GameTime)[0]
 
     def run(self, skip_frame):
