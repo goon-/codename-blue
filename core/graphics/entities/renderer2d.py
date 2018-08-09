@@ -1,10 +1,13 @@
-from core.drivers.driver import Driver
+from core.drivers.driver import Driver, GRAPHICS_DEFAULT_ORDER
 from core.glob import entity_registry
 from core.graphics.entities.drawable_entity import DrawableEntity
 from core.graphics.entities.viewport import Viewport
 
 
 class Renderer2d(Driver):
+    def __init__(self):
+        super(Renderer2d, self).__init__(GRAPHICS_DEFAULT_ORDER)
+
     def run(self, skip_frame):
         if not skip_frame:
             self.render()

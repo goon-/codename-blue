@@ -23,7 +23,7 @@ class FmGameRules(Driver):
     COLLSION_CAT_ENEMY = 4
 
     def __init__(self):
-        super(FmGameRules, self).__init__(0)
+        super(FmGameRules, self).__init__()
         key_mapping = KeyMapping({
             FmPlayer.ACT_MOVE_RIGHT: KEYS.d,
             FmPlayer.ACT_MOVE_LEFT: KEYS.a,

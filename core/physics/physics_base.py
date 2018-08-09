@@ -1,9 +1,9 @@
-from core.drivers.driver import Driver
+from core.drivers.driver import Driver, PHYSICS_DEFAULT_ORDER
 
 
 class PhysicsBase(Driver):
-    def __init__(self, order):
-        super(PhysicsBase, self).__init__(order)
+    def __init__(self):
+        super(PhysicsBase, self).__init__(PHYSICS_DEFAULT_ORDER)
         self.collision_rules = {}
 
     def set_collidable_categories(self, category, collidable_categories):
