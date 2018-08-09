@@ -59,6 +59,8 @@ class FmGameRules(GameRules):
         entity_registry.add(physics)
         entity_registry.add(ActorDriver(20))
         entity_registry.add(FpsCounter())
+        screen = entity_registry.get_by_class(Screen)[0]
+        screen.set_resolution(400, 500)
         self._game_time = entity_registry.get_by_class(GameTime)[0]
 
     def run(self, skip_frame):
