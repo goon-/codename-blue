@@ -4,12 +4,12 @@ from core.drivers.fps_counter import FpsCounter
 from core.gametime import GameTime
 from core.glob import entity_registry
 from core.math.default_vector_factory import DefaultVectorFactory
+from core.subsystem import Subsystem
 from core.world import World
 from fm.game_rules import FmGameRules
-from pygame_impl.event_pumper import PygameEventPumper
-from pygame_impl.graphics.entites.renderer2d import PygameRenderer2d
-from pygame_impl.graphics.entites.viewport import PygameViewport
-from pygame_impl.init import init_pygame
+from pygame_impl.graphics.graphics_subsystem import PygameGraphicsSubsystem
+from pygame_impl.input.input_subsystem import PygameInputSubsystem
+from pygame_impl.pygame_subsystem import PygameSubsystem
 
 logger = logging.getLogger(__name__)
 
@@ -38,15 +38,22 @@ logging.config.dictConfig({
 })
 
 
+def initialize_subsystems():
+    subsystems = entity_registry.get_by_class(Subsystem)
+    for subsystem in subsystems:
+        subsystem.initialize()
+
+
 if __name__ == '__main__':
-    init_pygame()
+    # TODO: move core stuff initialization somewhere
     entity_registry.add(DefaultVectorFactory())
     entity_registry.add(FpsCounter())
-    entity_registry.add(PygameViewport((0, 0, 400, 400), (0, 0, 400, 400)))
-    entity_registry.add(PygameRenderer2d())
-    entity_registry.add(PygameEventPumper())
-
     entity_registry.add(GameTime(1.0 / 60.0))
+
+    entity_registry.add(PygameSubsystem())
+    entity_registry.add(PygameGraphicsSubsystem())
+    entity_registry.add(PygameInputSubsystem())
+    initialize_subsystems()
     entity_registry.add(FmGameRules())
     world = World()
     world.run()
