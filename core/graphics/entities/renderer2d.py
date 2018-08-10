@@ -1,6 +1,7 @@
 from core.drivers.driver import Driver, GRAPHICS_DEFAULT_ORDER
 from core.glob import entity_registry
 from core.graphics.entities.drawable_entity import DrawableEntity
+from core.graphics.entities.renderer import Renderer
 from core.graphics.entities.viewport import Viewport
 
 
@@ -8,15 +9,9 @@ def is_in_visible_rendering_group(entity):
     return not entity.rendering_group or entity.rendering_group.visible
 
 
-class Renderer2d(Driver):
+class Renderer2d(Renderer):
     def __init__(self):
-        super(Renderer2d, self).__init__(GRAPHICS_DEFAULT_ORDER)
-
-    def run(self, skip_frame):
-        if not skip_frame:
-            self.render()
-
-        return not skip_frame
+        super(Renderer2d, self).__init__()
 
     def render(self):
         viewports = entity_registry.get_by_class(Viewport)

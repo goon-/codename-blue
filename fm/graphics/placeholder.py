@@ -1,8 +1,7 @@
 import logging
 
-from core.glob import get_vec_fact, entity_registry
+from core.glob import get_vec_fact
 from core.graphics.entities.drawable_entity import DrawableEntity
-from core.graphics.entities.renderer2d import Renderer2d
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +13,7 @@ class Placeholder(DrawableEntity):
         self.color = color
 
     def draw(self, viewport):
-        self._get_renderer().fill_rect(
+        self.renderer.fill_rect(
             viewport=viewport,
             rect=(
                 self.position.x,
@@ -24,7 +23,3 @@ class Placeholder(DrawableEntity):
             ),
             color=self.color
         )
-
-    @staticmethod
-    def _get_renderer():
-        return entity_registry.get_by_class(Renderer2d)[0]
