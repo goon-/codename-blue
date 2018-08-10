@@ -11,6 +11,7 @@ from core.input.devices.keyboard import KEYS, Keyboard
 from core.input.key_mapping import KeyMapping
 from core.input.player_input import PlayerInput
 from fm.fm_player import FmPlayer
+from fm.hud import Hud
 from fm.npc.dummy_enemy import DummyEnemy
 from fm.physics.spacecraft import SpacecraftPhysics
 from fm.wall import Wall
@@ -64,8 +65,8 @@ class FmGameRules(GameRules):
         screen = entity_registry.get_by_class(Screen)[0]
         screen.set_resolution(400, 500)
         renderer = entity_registry.get_by_class(Renderer2d)[0]
-        entity_registry.add(renderer.create_viewport((0, 0, 400, 400), (0, 100, 400, 400)))
-        entity_registry.add(renderer.create_viewport((1000, 1000, 1400, 200), (0, 000, 400, 200)))
+        entity_registry.add(renderer.create_viewport((0, 0, 400, 500), (0, 0, 400, 500)))
+        entity_registry.add(Hud(get_vec_fact().vector2(0, 0), get_vec_fact().vector2(400, 100), self._player))
         self._game_time = entity_registry.get_by_class(GameTime)[0]
 
     def run(self, skip_frame):

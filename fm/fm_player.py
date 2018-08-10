@@ -61,3 +61,8 @@ class FmPlayer(Player, Placeholder, DynamicPhysicEntity):
                     collision_category=self.projectile_collision_category
                 ))
                 self._last_shot_time = self._game_time.now
+
+    @property
+    def time_until_next_shot(self):
+        time = self.fire_cooldown - (self._game_time.now - self._last_shot_time)
+        return time if time > 0 else 0
