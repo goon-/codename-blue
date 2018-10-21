@@ -23,7 +23,7 @@ class PygameRenderer2d(Renderer2d):
         return PygameViewport(world_rect, screen_rect)
 
     def fill_rect(self, viewport, rect, color):
-        rect = viewport.transform_r(rect)
+        rect = viewport.world_to_screen_r(rect)
         pygame.draw.rect(
             viewport.surface,
             color,

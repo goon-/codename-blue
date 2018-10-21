@@ -35,6 +35,10 @@ class Vector2(object):
         self.x += other.x
         self.y += other.y
 
+    def sub(self, other):
+        self.x -= other.x
+        self.y -= other.y
+
     def multiply_v(self, Vector2):
         self.x *= Vector2.x
         self.y *= Vector2.y
