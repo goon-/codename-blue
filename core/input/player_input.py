@@ -1,10 +1,25 @@
+from core.input.devices.mouse import Mouse
+
+
 class PlayerInput(object):
-    def __init__(self, input_device, key_mapping):
-        self._input_device = input_device
+    def __init__(self, input_devices, key_mapping):
+        self._input_devices = input_devices
         self._key_mapping = key_mapping
 
     def is_pressed(self, action):
         if action not in self._key_mapping:
             return False
 
-        return self._input_device.is_pressed(self._key_mapping[action])
+        for device in self._input_devices:
+            for device_class, key in self._key_mapping[action]:
+                if isinstance(device, device_class) and device.is_pressed(key):
+                    return True
+
+        return False
+
+    def get_mouse_world_pos(self):
+        mice = filter(lambda device: isinstance(device, Mouse), self._input_devices)
+        if len(mice) == 0:
+            return 0, 0
+
+        return mice[0].get_world_pos()

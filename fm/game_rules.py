@@ -8,6 +8,7 @@ from core.glob import entity_registry, get_vec_fact
 from core.graphics.entities.renderer2d import Renderer2d
 from core.graphics.entities.screen import Screen
 from core.input.devices.keyboard import KEYS, Keyboard
+from core.input.devices.mouse import Mouse, MBUTTONS
 from core.input.key_mapping import KeyMapping
 from core.input.player_input import PlayerInput
 from fm.fm_player import FmPlayer
@@ -33,16 +34,17 @@ class FmGameRules(GameRules):
 
     def initialize(self):
         key_mapping = KeyMapping({
-            FmPlayer.ACT_MOVE_RIGHT: KEYS.d,
-            FmPlayer.ACT_MOVE_LEFT: KEYS.a,
-            FmPlayer.ACT_MOVE_UP: KEYS.w,
-            FmPlayer.ACT_MOVE_DOWN: KEYS.s,
-            FmPlayer.ACT_EXIT: KEYS.esc,
-            FmPlayer.ACT_FIRE: KEYS.space,
+            FmPlayer.ACT_MOVE_RIGHT: [(Keyboard, KEYS.d)],
+            FmPlayer.ACT_MOVE_LEFT: [(Keyboard, KEYS.a)],
+            FmPlayer.ACT_MOVE_UP: [(Keyboard, KEYS.w)],
+            FmPlayer.ACT_MOVE_DOWN: [(Keyboard, KEYS.s)],
+            FmPlayer.ACT_EXIT: [(Keyboard, KEYS.esc)],
+            FmPlayer.ACT_FIRE: [(Keyboard, KEYS.space), (Mouse, MBUTTONS.lmb)],
         })
         keyboard = entity_registry.get_by_class(Keyboard)[0]
+        mouse = entity_registry.get_by_class(Mouse)[0]
         self._player = FmPlayer(
-            PlayerInput(keyboard, key_mapping), get_vec_fact().vector2(1, 200), z=1,
+            PlayerInput([keyboard, mouse], key_mapping), get_vec_fact().vector2(1, 200), z=1,
             collision_category=self.COLLSION_CAT_PLAYER,
             projectile_collision_category=self.COLLSION_CAT_PLAYER_PROJECTILE
         )
@@ -65,7 +67,9 @@ class FmGameRules(GameRules):
         screen = entity_registry.get_by_class(Screen)[0]
         screen.set_resolution(400, 500)
         renderer = entity_registry.get_by_class(Renderer2d)[0]
-        entity_registry.add(renderer.create_viewport((0, 0, 400, 500), (0, 0, 400, 500)))
+        viewport = renderer.create_viewport((0, 0, 400, 500), (0, 0, 400, 500))
+        entity_registry.add(viewport)
+        mouse.set_viewport(viewport)
         entity_registry.add(Hud(get_vec_fact().vector2(0, 0), get_vec_fact().vector2(400, 100), self._player))
         self._game_time = entity_registry.get_by_class(GameTime)[0]
 
