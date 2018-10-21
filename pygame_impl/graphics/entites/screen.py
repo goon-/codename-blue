@@ -13,4 +13,4 @@ class Screen(CoreScreen):
     def set_resolution(self, res_x, res_y):
         self.res_x = res_x
         self.res_y = res_y
-        self.screen = pygame.display.set_mode((res_x, res_y))
+        self.screen = pygame.display.set_mode((res_x, res_y), pygame.DOUBLEBUF)
