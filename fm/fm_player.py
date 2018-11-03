@@ -1,4 +1,5 @@
 import logging
+import math
 
 from core.gametime import GameTime
 from core.glob import get_vec_fact, entity_registry
@@ -6,12 +7,12 @@ from core.physics.entities.dynamic_physic_entity import DynamicPhysicEntity
 from core.player import Player
 from core.world import World
 from fm.entities.projectile import Projectile
-from fm.graphics.placeholder import Placeholder
+from fm.graphics.triangle_placeholder import TrianglePlaceholder
 
 logger = logging.getLogger(__name__)
 
 
-class FmPlayer(Player, Placeholder, DynamicPhysicEntity):
+class FmPlayer(Player, TrianglePlaceholder, DynamicPhysicEntity):
     SPEED_CAP = 100.0
     ACT_MOVE_RIGHT = 0
     ACT_MOVE_LEFT = 1
