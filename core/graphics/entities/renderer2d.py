@@ -32,3 +32,9 @@ class Renderer2d(Renderer):
 
     def text(self, viewport, position, text, color, font=None):
         raise NotImplementedError()
+
+    def fill_polygon(self, viewport, pointlist, color):
+        raise NotImplementedError()
+
+    def line(self, viewport, start, end, color):
+        raise NotImplementedError()

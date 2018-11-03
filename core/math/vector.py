@@ -18,6 +18,9 @@ class Vector2(object):
     def __sub__(self, other):
         return get_vec_fact().vector2(self.x - other.x, self.y - other.y)
 
+    def __div__(self, scalar):
+        return get_vec_fact().vector2(self.x / scalar, self.y / scalar)
+
     def __nonzero__(self):
         return self.x != 0 or self.y != 0
 
@@ -39,9 +42,9 @@ class Vector2(object):
         self.x -= other.x
         self.y -= other.y
 
-    def multiply_v(self, Vector2):
-        self.x *= Vector2.x
-        self.y *= Vector2.y
+    def multiply_v(self, other):
+        self.x *= other.x
+        self.y *= other.y
 
     def normalize(self, norm=1.0):
         norm = float(norm)
@@ -56,3 +59,16 @@ class Vector2(object):
 
     def copy(self):
         return get_vec_fact().vector2(self.x, self.y)
+
+    def rotated(self, angle):
+        return get_vec_fact().vector2(
+            self.x * math.cos(angle) - self.y * math.sin(angle),
+            self.x * math.sin(angle) + self.y * math.cos(angle),
+        )
+
+    def rotated_around(self, angle, center):
+        centered = self - center
+        return centered.rotated(angle) + center
+
+    def point(self):
+        return self.x, self.y

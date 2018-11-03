@@ -13,13 +13,14 @@ class Placeholder(DrawableEntity):
         self.color = color
 
     def draw(self, viewport):
-        self.renderer.fill_rect(
+        center = self.position + (self.placeholder_size / 2)
+        self.renderer.fill_polygon(
             viewport=viewport,
-            rect=(
-                self.position.x,
-                self.position.y,
-                self.position.x + self.placeholder_size.x,
-                self.position.y + self.placeholder_size.y,
+            color=self.color,
+            pointlist=(
+                self.position.rotated_around(self.rotation, center).point(),
+                (self.position + get_vec_fact().vector2(self.placeholder_size.x, 0.0)).rotated_around(self.rotation, center).point(),
+                (self.position + get_vec_fact().vector2(self.placeholder_size.x, self.placeholder_size.y)).rotated_around(self.rotation, center).point(),
+                (self.position + get_vec_fact().vector2(0.0, self.placeholder_size.y)).rotated_around(self.rotation, center).point(),
             ),
-            color=self.color
         )

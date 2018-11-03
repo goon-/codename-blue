@@ -23,15 +23,15 @@ class PygameRenderer2d(Renderer2d):
         return PygameViewport(world_rect, screen_rect)
 
     def fill_rect(self, viewport, rect, color):
-        rect = viewport.world_to_screen_r(rect)
+        screen_rect = self._world_to_screen_r(viewport, rect)
         pygame.draw.rect(
             viewport.surface,
             color,
             (
-                rect[0],
-                viewport.surface.get_height() - rect[1],
-                rect[2] - rect[0],
-                -(rect[3] - rect[1]),
+                screen_rect[0],
+                screen_rect[1],
+                screen_rect[2] - screen_rect[0],
+                screen_rect[3] - screen_rect[1],
             ),
             0,
         )
@@ -39,4 +39,21 @@ class PygameRenderer2d(Renderer2d):
     def text(self, viewport, position, text, color, font=None):
         font = font or self._default_font
         label = font.render(text, 1, color)
-        viewport.surface.blit(label, (position.x, position.y))
+        viewport.surface.blit(label, self._world_to_screen_p(viewport, (position.x, position.y)))
+
+    def fill_polygon(self, viewport, color, pointlist):
+        pygame.draw.polygon(viewport.surface, color, map(lambda x: self._world_to_screen_p(viewport, x), pointlist))
+
+    def line(self, viewport, start, end, color):
+        pygame.draw.line(viewport.surface, color, self._world_to_screen_p(viewport, start), self._world_to_screen_p(viewport, end))
+
+    def _invert_y_p(self, viewport, point):
+        return point[0], viewport.surface.get_height() - point[1]
+
+    def _world_to_screen_p(self, viewport, point):
+        return self._invert_y_p(viewport, viewport.world_to_screen_p(point))
+
+    def _world_to_screen_r(self, viewport, rect):
+        point1 = self._world_to_screen_p(viewport, (rect[0], rect[1]))
+        point2 = self._world_to_screen_p(viewport, (rect[2], rect[3]))
+        return point1[0], point1[1], point2[0], point2[1]
