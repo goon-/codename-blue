@@ -56,11 +56,20 @@ class FmPlayer(Player, Placeholder, DynamicPhysicEntity):
         if self.player_input.is_pressed(self.ACT_FIRE):
             self.shoot()
 
+        self._update_rotation()
+
+    def _update_rotation(self):
+        mouse_pos = self.player_input.get_mouse_world_pos()
+        center = self.position + (self.size / 2)
+        direction = get_vec_fact().vector2(mouse_pos[0] - center.x, mouse_pos[1] - center.y)
+        self.rotation = math.atan2(direction.y, direction.x)
+
     def shoot(self):
         if self._game_time.now - self._last_shot_time < self.fire_cooldown:
             return
 
-        projectile_spawn_position = self.position + get_vec_fact().vector2(21, 0)
+        center = self.position + (self.size / 2)
+        projectile_spawn_position = (self.position + get_vec_fact().vector2(self.size.x + 1, self.size.y / 2)).rotated_around(self.rotation, center)
         projectile_direction = self._calc_normalized_projectile_direction(projectile_spawn_position)
         entity_registry.add(Projectile(
             projectile_spawn_position, projectile_direction * 1000, (0, 0, 255),
